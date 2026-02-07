@@ -76,6 +76,6 @@
 - [ ] _(Deferred to next lab session)_
 
 ### Submission
-- [ ] Verify GitHub repo is public
+- [x] Verify GitHub repo is public
 - [ ] Verify repo structure matches requirements
-- [ ] Submit GitHub link on MS Teams
+- [x] Submit GitHub link on MS Teams
