@@ -2,7 +2,7 @@
 
 ---
 
-## ✅ DONE
+## DONE
 
 ### Project Setup
 - [x] Project folder structure set up (`/web`, `/backend`, `/mobile`, `/docs`, `README.md`, `TASK_CHECKLIST.md`)
@@ -34,7 +34,7 @@
 
 ---
 
-## 🔄 IN-PROGRESS
+## IN-PROGRESS
 
 ### Backend
 - [ ] `GET /api/user/me` (protected endpoint — returns current user profile)
@@ -48,7 +48,7 @@
 
 ---
 
-## 📝 TODO
+## TODO
 
 ### Backend
 - [ ] Error/exception handling (proper HTTP responses)

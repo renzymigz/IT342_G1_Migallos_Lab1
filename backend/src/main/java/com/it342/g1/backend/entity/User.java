@@ -1,5 +1,7 @@
 package com.it342.g1.backend.entity;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +23,13 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Integer userId;
+
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String firstName;
@@ -29,12 +37,22 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
     @Column(nullable = false)
     private String phone;
 
     @Column(nullable = false)
-    private String password;
+    private String passwordHash;
+
+    // Methods as per class diagram
+    public Integer getId() {
+        return this.userId;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public boolean verifyPassword(String inputPassword, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(inputPassword, this.passwordHash);
+    }
 }
