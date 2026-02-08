@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kumbh+Sans:wght,YOPQ@100..900,300&display=swap');
+
+@theme {
+  /* This overrides the default Tailwind sans font for the whole app */
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  
+  /* You can still keep specific variables if you want to use them occasionally */
+  --font-geist: "Geist", sans-serif;
+  --font-kumbh: "Kumbh Sans", sans-serif;
+}
