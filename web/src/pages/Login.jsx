@@ -8,6 +8,8 @@ const Login = () => {
     password: ''
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -27,7 +29,7 @@ const Login = () => {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back! <i class="fa-regular fa-hand-wave"></i></h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back!</h1>
             <p className="text-gray-600">Please enter your credentials to login</p>
           </div>
 
@@ -54,16 +56,25 @@ const Login = () => {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
-                placeholder="Enter your password"
-                required
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
+                  placeholder="Enter your password"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition"
+                >
+                  <i className={`fa-solid ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                </button>
+              </div>
             </div>
 
             {/* Remember Me & Forgot Password */}
@@ -81,7 +92,7 @@ const Login = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-black text-white py-3 rounded-lg font-medium cursor-pointer hover:bg-[#2e2e2e] transition duration-200 shadow-lg hover:shadow-xl"
+              className="w-full bg-black text-white py-3 rounded-lg font-semibold cursor-pointer hover:bg-[#2e2e2e] transition duration-200 shadow-lg hover:shadow-xl"
             >
               Login
             </button>
@@ -90,7 +101,7 @@ const Login = () => {
           {/* Register Link */}
           <p className="mt-6 text-center text-sm text-gray-600">
             Don't have an account?{' '}
-            <Link to="/register" className="text-black hover:text-[#2e2e2e] font-medium">
+            <Link to="/register" className="text-black hover:text-[#2e2e2e] font-semibold">
               Register here
             </Link>
           </p>
