@@ -8,9 +8,9 @@ import java.util.Set;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.it342.g1.backend.dto.DashboardDataDto;
 import com.it342.g1.backend.dto.LoginRequestDto;
 import com.it342.g1.backend.dto.RegisterRequestDto;
+import com.it342.g1.backend.dto.UserDTO;
 import com.it342.g1.backend.entity.User;
 import com.it342.g1.backend.exception.AuthException;
 import com.it342.g1.backend.repository.UserRepository;
@@ -112,23 +112,24 @@ public class AuthService {
         return response;
     }
 
-    public User getUserProfile(Integer userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new AuthException("User not found"));
-    }
+    public UserDTO getUserProfileFromToken(String token) {
+        if (!validateSession(token)) {
+            throw new AuthException("Invalid or expired session");
+        }
 
-    public DashboardDataDto getDashboardData(Integer userId) {
+        String userIdStr = tokenProvider.getUserIdFromToken(token);
+        Integer userId = Integer.parseInt(userIdStr);
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new AuthException("User not found"));
 
-        return DashboardDataDto.builder()
+        return UserDTO.builder()
                 .userId(user.getUserId())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .phone(user.getPhone())
-                .welcomeMessage("Welcome back, " + user.getFirstName() + "!")
                 .build();
     }
 }

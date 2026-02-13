@@ -9,12 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DashboardDataDto {
+public class UserDTO {
     private Integer userId;
     private String username;
     private String email;
     private String firstName;
     private String lastName;
     private String phone;
-    private String welcomeMessage;
 }

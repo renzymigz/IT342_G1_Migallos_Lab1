@@ -34,7 +34,7 @@
 								"register"
 							]
 						},
-						"description": "Register a new user with firstName, lastName, email, phone, and password. Returns token and userId."
+						"description": "Register a new user with username, firstName, lastName, email, phone, and password. Returns token and userId."
 					},
 					"response": []
 				},
@@ -45,13 +45,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"// Save token to environment variable",
 									"var jsonData = pm.response.json();",
 									"if (jsonData.token) {",
-									"    pm.environment.set(\"auth_token\", jsonData.token);",
+									"    pm.collectionVariables.set(\"auth_token\", jsonData.token);",
 									"}",
 									"if (jsonData.userId) {",
-									"    pm.environment.set(\"user_id\", jsonData.userId);",
+									"    pm.collectionVariables.set(\"user_id\", jsonData.userId);",
 									"}"
 								],
 								"type": "text/javascript"
@@ -81,7 +80,7 @@
 								"login"
 							]
 						},
-						"description": "Login with email (or username) and password. Returns JWT token and userId. Token is automatically saved to environment variable."
+						"description": "Login with email (or username) and password. Returns JWT token and userId. Token is automatically saved to collection variable."
 					},
 					"response": []
 				},
@@ -113,46 +112,60 @@
 						"description": "Logout user and terminate their session. Requires Authorization header with Bearer token."
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "User (Protected)",
+			"item": [
 				{
-					"name": "View Profile",
+					"name": "View Profile (me)",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
 						"url": {
-							"raw": "{{base_url}}/api/auth/profile/{{user_id}}",
+							"raw": "{{base_url}}/api/user/me",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
-								"auth",
-								"profile",
-								"{{user_id}}"
+								"user",
+								"me"
 							]
 						},
-						"description": "Get user profile information by userId. Returns User object with all user details."
+						"description": "Get current user's profile from JWT token. Returns UserDTO. Requires Authorization header."
 					},
 					"response": []
 				},
 				{
-					"name": "View Dashboard",
+					"name": "View Dashboard (me)",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
 						"url": {
-							"raw": "{{base_url}}/api/auth/dashboard/{{user_id}}",
+							"raw": "{{base_url}}/api/user/dashboard/me",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
-								"auth",
+								"user",
 								"dashboard",
-								"{{user_id}}"
+								"me"
 							]
 						},
-						"description": "Get dashboard data for user including welcome message. Returns DashboardData object."
+						"description": "Get current user's dashboard data from JWT token. Returns UserDTO. Requires Authorization header."
 					},
 					"response": []
 				}
