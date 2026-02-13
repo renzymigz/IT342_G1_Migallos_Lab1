@@ -56,7 +56,7 @@ export default function ProfileMenuToggle() {
                   Florence Azriel R. Migallos
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  florenceazriel.migallos@cit.edu
+                  @renzymigz
                 </span>
               </div>
             </div>
