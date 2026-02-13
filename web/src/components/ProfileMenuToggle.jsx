@@ -94,15 +94,14 @@ export default function ProfileMenuToggle() {
                   Log out
                 </button>
               </AlertDialogTrigger>
-              <AlertDialogContent className="sm:max-w-lg">
+              <AlertDialogContent className="sm:max-w-md">
                 <AlertDialogHeader>
                     
                   <AlertDialogTitle>
                     Are you sure you want to log out?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
-                    This will permanently delete this chat conversation. View{" "}
-                    <a href="#">Settings</a> delete any memories saved during
+                   you will no longer be logged in on the selected device
                     this chat.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
@@ -111,7 +110,7 @@ export default function ProfileMenuToggle() {
                     Cancel
                   </AlertDialogCancel>
                   <AlertDialogAction variant="destructive">
-                    Delete
+                    Log Out
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
