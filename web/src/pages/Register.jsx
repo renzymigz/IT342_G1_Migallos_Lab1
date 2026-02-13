@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { authAPI } from '../api/auth';
 import RegisterImage from "../assets/register-illustration.png";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",
@@ -13,8 +15,10 @@ const Register = () => {
     confirmPassword: "",
   });
 
-  // --- NEW: Validation State ---
+  // --- Validation State ---
   const [phoneError, setPhoneError] = useState("");
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -31,9 +35,10 @@ const Register = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setError('');
+    setPhoneError('');
 
     // Checks for a standard PH format or international (10-13 digits)
     const phoneRegex = /^(09|\+639)\d{9}$/; 
@@ -43,12 +48,27 @@ const Register = () => {
     }
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      setError("Passwords do not match!");
       return;
     }
 
-    console.log("Register data:", formData);
-    // TODO: Add API call here
+    setIsLoading(true);
+
+    try {
+      // Remove confirmPassword before sending to API
+      const { confirmPassword, ...registrationData } = formData;
+      const response = await authAPI.register(registrationData);
+      console.log('Registration successful:', response);
+      
+      // Show success message and redirect to login
+      alert(`Registration successful! Welcome ${response.username}. Please login to continue.`);
+      navigate('/login');
+    } catch (err) {
+      console.error('Registration error:', err);
+      setError(err.response?.data?.error || 'Registration failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -73,7 +93,13 @@ const Register = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* ... Username, First/Last Name, Email fields (Same as your code) ... */}
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                <i className="fa-solid fa-circle-exclamation mr-2"></i>
+                {error}
+              </div>
+            )}
             
             {/* Username */}
             <div>
@@ -151,9 +177,17 @@ const Register = () => {
 
             <button
               type="submit"
-              className="w-full bg-black text-white py-3 rounded-lg font-semibold cursor-pointer hover:bg-[#2e2e2e] transition duration-200 shadow-lg"
+              disabled={isLoading}
+              className="w-full bg-black text-white py-3 rounded-lg font-semibold cursor-pointer hover:bg-[#2e2e2e] transition duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Register
+              {isLoading ? (
+                <>
+                  <i className="fa-solid fa-spinner fa-spin mr-2"></i>
+                  Creating account...
+                </>
+              ) : (
+                'Register'
+              )}
             </button>
           </form>
 

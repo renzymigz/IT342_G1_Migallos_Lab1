@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { authAPI } from '../api/auth';
 import Doodle1 from "../assets/doodle-1.jpg";
 import Doodle2 from "../assets/doodle-2.jpg";
 import Doodle3 from "../assets/doodle-3.png";
@@ -8,54 +10,91 @@ import Doodle5 from "../assets/doodle-5.png";
 import ProfilePicture from "../assets/my-profile.png";
 
 const Profile = () => {
-  const userData = {
-    userId: "1",
-    username: "renzymigz",
-    firstName: "Renzo",
-    lastName: "Migallos",
-    email: "renzo.migallos@example.com",
-    phone: "+63 912 345 6789",
-  };
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const data = await authAPI.getProfile();
+        setUserData(data);
+      } catch (err) {
+        console.error('Error fetching profile:', err);
+        setError('Failed to load profile');
+        if (err.response?.status === 401) {
+          navigate('/login');
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [navigate]);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <i className="fa-solid fa-spinner fa-spin text-4xl text-gray-400"></i>
+      </div>
+    );
+  }
+
+  if (error || !userData) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">{error || 'User data not available'}</p>
+          <Link to="/login" className="text-black hover:underline">Go to Login</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex justify-center min-h-screen items-center">
-      {/* --- DOODLE AREA START --- */}
 
+    <div className="flex justify-center min-h-screen items-center relative overflow-hidden">
+      
+      
       <img
         src={Doodle1}
         alt="Doodle"
-        className="absolute top-20 left-10 h-24 rotate-[-12deg] pointer-events-none"
+        className="absolute top-20 left-10 h-24 rotate-[-12deg] pointer-events-none opacity-80"
       />
 
       <img
         src={Doodle2}
         alt="Doodle"
-        className="absolute bottom-12 right-12 h-32 rotate-[45deg] pointer-events-none"
+        className="absolute bottom-12 right-12 h-32 rotate-[45deg] pointer-events-none opacity-80"
       />
 
       <img
         src={Doodle3}
         alt="Doodle"
-        className="absolute top-20 right-20 h-16  rotate-[15deg] pointer-events-none"
+        className="absolute top-20 right-20 h-16  rotate-[15deg] pointer-events-none opacity-80"
       />
 
       <img
         src={Doodle4}
         alt="Doodle"
-        className="absolute bottom-24 left-16 h-28  rotate-[-6deg] pointer-events-none"
+        className="absolute bottom-24 left-16 h-28  rotate-[-6deg] pointer-events-none opacity-80"
       />
 
       <img
         src={Doodle5}
         alt="Doodle"
-        className="absolute top-1/2 left-32 h-20  -translate-y-1/2 hidden xl:block pointer-events-none"
+        className="absolute top-1/2 left-32 h-20  -translate-y-1/2 hidden xl:block pointer-events-none opacity-80"
       />
-      <div className="w-full max-w-4xl">
+      
+      <div className="w-full max-w-4xl relative z-10">
         <div>
           <h1 className="text-4xl font-bold items-center mb-8  flex flex-col gap-2 ">
             Profile
           </h1>
         </div>
+
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           <div className="px-8 py-6">
             <div className="flex items-center space-x-4">

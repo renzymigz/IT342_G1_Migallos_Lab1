@@ -34,7 +34,7 @@
 								"register"
 							]
 						},
-						"description": "Register a new user with username, firstName, lastName, email, phone, and password. Returns token and userId."
+						"description": "Register a new user with username, firstName, lastName, email, phone, and password. Returns success message and userId. User must login separately to get token."
 					},
 					"response": []
 				},

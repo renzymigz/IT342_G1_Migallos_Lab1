@@ -75,13 +75,11 @@ public class AuthService {
                 .build();
 
         User savedUser = registerUser(user, request.getPassword());
-        String token = tokenProvider.generateToken(savedUser);
-        activeSessions.add(token);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("message", "User registered successfully");
-        response.put("token", token);
+        response.put("message", "User registered successfully. Please login to continue.");
         response.put("userId", savedUser.getUserId());
+        response.put("username", savedUser.getUsername());
         return response;
     }
 
