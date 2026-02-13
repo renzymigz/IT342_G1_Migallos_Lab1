@@ -7,7 +7,7 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to add token to headers
+// REQUEST INTERCEPTOR: Attaches the token to every outgoing message
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('authToken');
@@ -21,76 +21,69 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle errors
+// RESPONSE INTERCEPTOR: Watches for the "401 Unauthorized"
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      // Token expired or invalid - clear storage and redirect to login
-      localStorage.removeItem('authToken');
+    // CHECK THE STATUS CODE HERE
+    const status = error.response ? error.response.status : null;
+
+    // Fix: Catch BOTH 401 (Unauthorized) AND 403 (Forbidden)
+    if (status === 401 || status === 403) {
+      console.warn('Session expired or invalid. Logging out...');
+      
+      localStorage.removeItem('authToken'); 
       localStorage.removeItem('userId');
-      window.location.href = '/login';
+      
+      // Force redirect to login
+      window.location.href = '/login'; 
     }
+    
     return Promise.reject(error);
   }
 );
 
-// Auth API functions
 export const authAPI = {
-  // Register
   register: async (userData) => {
     const response = await api.post('/auth/register', userData);
     return response.data;
   },
 
-  // Login
   login: async (credentials) => {
     const response = await api.post('/auth/login', credentials);
     if (response.data.token) {
       localStorage.setItem('authToken', response.data.token);
-      localStorage.setItem('userId', response.data.userId);
+      localStorage.setItem('userId', response.data.userId); // Optional if you need it
     }
     return response.data;
   },
 
-  // Logout
   logout: async () => {
     try {
       const response = await api.post('/auth/logout');
       return response.data;
     } finally {
-      // Clear local storage even if request fails
+      // Always clear storage
       localStorage.removeItem('authToken');
       localStorage.removeItem('userId');
+      window.location.href = '/login';
     }
   },
 
-  // Get current user profile
   getProfile: async () => {
-    const response = await api.get('/user/me');
+    const response = await api.get('/user/me'); 
     return response.data;
   },
 
-  // Get dashboard data
   getDashboard: async () => {
     const response = await api.get('/user/dashboard/me');
     return response.data;
   },
 
-  // Check if user is authenticated
-  isAuthenticated: () => {
-    return !!localStorage.getItem('authToken');
-  },
 
-  // Get stored token
-  getToken: () => {
-    return localStorage.getItem('authToken');
-  },
-
-  // Get stored user ID
-  getUserId: () => {
-    return localStorage.getItem('userId');
-  },
+  isAuthenticated: () => !!localStorage.getItem('authToken'),
+  getToken: () => localStorage.getItem('authToken'),
+  getUserId: () => localStorage.getItem('userId'),
 };
 
 export default api;
