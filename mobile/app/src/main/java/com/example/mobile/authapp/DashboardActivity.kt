@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,11 @@ class DashboardActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+        val sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+        val firstName = sharedPref.getString("FIRST_NAME", "N/A")
+        val lastName = sharedPref.getString("LAST_NAME", "N/A")
+
+        findViewById<TextView>(R.id.tvDashboardName).text = "$firstName $lastName"
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNav.selectedItemId = R.id.nav_dashboard
