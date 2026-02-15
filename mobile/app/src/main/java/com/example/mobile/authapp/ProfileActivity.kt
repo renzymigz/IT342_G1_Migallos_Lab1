@@ -6,7 +6,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.mobile.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ProfileActivity : Activity() {
 
@@ -20,7 +22,6 @@ class ProfileActivity : Activity() {
         val tvLastName = findViewById<TextView>(R.id.tvLastName)
         val tvEmail = findViewById<TextView>(R.id.tvEmail)
         val tvPhone = findViewById<TextView>(R.id.tvPhone)
-        val btnLogout = findViewById<Button>(R.id.btnLogout)
 
         // 2. Retrieve Data from SharedPreferences
         // We saved this in LoginActivity under the name "UserSession"
@@ -40,18 +41,31 @@ class ProfileActivity : Activity() {
         tvPhone.text = phone
 
         // 4. Handle Logout
-        btnLogout.setOnClickListener {
-            // Clear saved tokens and user data
-            sharedPref.edit().clear().apply()
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNav.selectedItemId = R.id.nav_profile
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_dashboard -> {
+                     startActivity(Intent(this, DashboardActivity::class.java))
+                    true
+                }
+                R.id.nav_profile -> {
+                    // You are already here, so do nothing or refresh
+                    true
+                }
+                R.id.nav_logout -> {
+                    // This replaces your old btnLogout.setOnClickListener
+                    val sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+                    sharedPref.edit().clear().apply()
 
-            // Navigate back to Login
-            val intent = Intent(this, LoginActivity::class.java)
-
-            // Clear the back stack (FLAGS) so the user cannot press "Back" to return here
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-            startActivity(intent)
-            finish()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                else -> false
+            }
         }
     }
 }

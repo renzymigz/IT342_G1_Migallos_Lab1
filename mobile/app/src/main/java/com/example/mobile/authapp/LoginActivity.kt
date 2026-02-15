@@ -67,7 +67,6 @@ class LoginActivity : Activity() {
 
         // 3. Handle Register Link Click
         tvRegisterLink.setOnClickListener {
-            // Corrected to point to RegisterActivity (not ProfileActivity)
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
@@ -96,7 +95,7 @@ class LoginActivity : Activity() {
                     Toast.makeText(this@LoginActivity, "Welcome back, ${user.firstName}!", Toast.LENGTH_SHORT).show()
 
                     // Navigate to Profile
-                    val intent = Intent(this@LoginActivity, ProfileActivity::class.java)
+                    val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
                     // Clear the back stack so pressing "Back" doesn't return to Login
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
