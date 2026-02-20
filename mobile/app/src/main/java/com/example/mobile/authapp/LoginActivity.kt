@@ -25,7 +25,7 @@ class LoginActivity : Activity() {
 
         // 1. Initialize Views
         val etIdentifier = findViewById<EditText>(R.id.etIdentifier)
-        val etPassword = findViewById<EditText>(R.id.etPassword)
+        val etPassword = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val tvRegisterLink = findViewById<TextView>(R.id.tvRegisterLink)
 

@@ -50,22 +50,40 @@ class ProfileActivity : Activity() {
                     true
                 }
                 R.id.nav_profile -> {
-                    // You are already here, so do nothing or refresh
                     true
                 }
                 R.id.nav_logout -> {
-                    // This replaces your old btnLogout.setOnClickListener
-                    val sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE)
-                    sharedPref.edit().clear().apply()
-
-                    val intent = Intent(this, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                    finish()
-                    true
+                    showCustomLogoutDialog()
+                    false
                 }
                 else -> false
             }
         }
+    }
+
+    private fun showCustomLogoutDialog() {
+        val dialog = android.app.Dialog(this)
+        dialog.setContentView(R.layout.dialog_logout_custom)
+
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
+        val btnConfirm = dialog.findViewById<Button>(R.id.btnConfirmLogout)
+
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnConfirm.setOnClickListener {
+            val sharedPref = getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+            sharedPref.edit().clear().apply()
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
+
+        dialog.show()
     }
 }

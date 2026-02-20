@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -148,14 +149,27 @@
             android:textColor="#333333"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="6dp"/>
-        <EditText
-            android:id="@+id/etRegPassword"
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_rounded_input"
-            android:paddingStart="16dp"
-            android:inputType="textPassword"
-            android:textSize="14sp"/>
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:boxBackgroundMode="none"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@android:color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_rounded_input"
+                android:hint="Create a password"
+                android:paddingStart="16dp"
+                android:paddingEnd="48dp"
+                android:inputType="textPassword"
+                android:textSize="14sp"
+                android:backgroundTint="@null"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -165,15 +179,28 @@
             android:textColor="#333333"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="6dp"/>
-        <EditText
-            android:id="@+id/etConfirmPassword"
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_rounded_input"
-            android:paddingStart="16dp"
-            android:inputType="textPassword"
-            android:textSize="14sp"
-            android:layout_marginBottom="32dp"/>
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:boxBackgroundMode="none"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@android:color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_rounded_input"
+                android:hint="Repeat your password"
+                android:paddingStart="16dp"
+                android:paddingEnd="48dp"
+                android:inputType="textPassword"
+                android:textSize="14sp"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="@null"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnRegister"

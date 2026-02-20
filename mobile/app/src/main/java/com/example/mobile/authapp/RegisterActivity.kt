@@ -25,8 +25,8 @@ class RegisterActivity : Activity() {
         val etLastName = findViewById<EditText>(R.id.etLastName)
         val etEmail = findViewById<EditText>(R.id.etRegEmail)
         val etPhone = findViewById<EditText>(R.id.etPhone)
-        val etPassword = findViewById<EditText>(R.id.etRegPassword)
-        val etConfirmPass = findViewById<EditText>(R.id.etConfirmPassword)
+        val etPassword = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etRegPassword)
+        val etConfirmPass = findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etConfirmPassword)
 
         val btnRegister = findViewById<Button>(R.id.btnRegister)
         val tvLoginLink = findViewById<TextView>(R.id.tvLoginLink)
