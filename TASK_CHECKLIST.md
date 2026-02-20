@@ -72,12 +72,36 @@
 - [x] Auto-logout on token tampering or expiration — `[commit: 370086d]`
 - [x] Redirect to login on 401 Unauthorized — `[commit: b64da96]`
 
+### Mobile (Android) — Setup
+- [x] Android project initialized with Gradle and dependencies (Retrofit, Material Design) — `[commit: 9e9f64e]`
+- [x] Network security config configured to allow API communication — `[commit: be3e875]`
+
+### Mobile (Android) — Activities
+- [x] Create Login activity with UI layout — `[commit: 9e9f64e]`
+- [x] Create Register activity with UI layout — `[commit: 9e9f64e]`
+- [x] Create Dashboard activity with UI layout — `[commit: 9e9f64e]`
+- [x] Create Profile activity with UI layout — `[commit: 9e9f64e]`
+
+### Mobile (Android) — API Integration
+- [x] Create Retrofit client for API communication — `[commit: 9e9f64e]`
+- [x] Create API service interface with auth endpoints — `[commit: 9e9f64e]`
+
+### Mobile (Android) — Models
+- [x] Create data models (User, LoginRequest, LoginResponse, RegisterRequest) — `[commit: 9e9f64e]`
+
+### Mobile (Android) — UI/Resources
+- [x] Add custom layouts for all activities — `[commit: 9e9f64e]`
+- [x] Add rounded input background drawable — `[commit: 9e9f64e]`
+- [x] Implement bottom navigation bar for Profile and Dashboard — `[commit: 711811f]`
+- [x] Add UI items to dashboard screen — `[commit: 362c342]`
+- [x] Add custom logout modal with dialog layout — `[commit: acd483c]`
+- [x] Add static art images to screens (login, register, dashboard, logout) — `[commit: 4aa3e51]`
+
 ---
 
 ## IN PROGRESS
 ## TODO
-### Mobile
-- [ ] _(Deferred to next lab session)_
+
 
 ---
 
